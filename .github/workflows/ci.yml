@@ -15,3 +15,7 @@ jobs:
       #Executer les tests
       - name: Run test
         run: cd app && composer install && cp .env.example .env && php artisan key:generate && php artisan test
+
+      #Construire image
+      - name: Construire image
+        run: docker build -t manslunick/laravel:latest .

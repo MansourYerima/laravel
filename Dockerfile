@@ -8,7 +8,7 @@ WORKDIR /projet
 COPY app ./
 
 #install php 8.4.11 et de composer
-RUN apt update && apt-get install libfreetype-dev libjpeg62-turbo-dev libpng-dev libpq-dev zip -y \
+RUN apt update && apt-get install libfreetype-dev libjpeg62-turbo-dev libpng-dev libpq-dev zip git -y \
     &&php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"\
 	&&php composer-setup.php\
 	&&php -r "unlink('composer-setup.php');"\
