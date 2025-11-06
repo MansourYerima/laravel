@@ -1,0 +1,32 @@
+#Base image
+FROM php:8.4
+
+#Work directory
+WORKDIR /projet
+
+#Copy laravel project in /project directory
+COPY app ./
+
+#install php 8.4.11 et de composer
+RUN apt update && apt-get install libfreetype-dev libjpeg62-turbo-dev libpng-dev libpq-dev zip -y \
+    &&php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    &&php -r "if (hash_file('sha384', 'composer-setup.php') === 'ed0feb545ba87161262f2d45a633e34f591ebb3381f2e0063c345ebea4d228dd0043083717770234ec00c5a9f9593792') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }" \
+    &&php composer-setup.php \
+    &&php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/local/bin/composer\
+    && docker-php-ext-install pdo pgsql pdo_pgsql
+
+#Run 
+EXPOSE 8000
+
+#Give [ermission
+RUN chmod u+x /projet/entrypoint.sh
+
+#Generated key
+RUN composer install && php artisan key:gen
+
+#Start main project
+
+#ENTRYPOINT ["/bin/bash"]
+
+ENTRYPOINT ["php", "artisan", "serve", "--host", "0.0.0.0"]
