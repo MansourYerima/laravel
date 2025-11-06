@@ -27,4 +27,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME}}
           password: ${{ secrets.DOCKER_TOKEN }}
 
+      #Pousser l'image
+      - name: Pousser image
+        run: docker push manslunick/laravel:latest
+
       
