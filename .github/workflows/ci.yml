@@ -8,5 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      #Recuperer le code source
       - name: Recuperer le code source
         uses: actions/checkout@v5
+
+      #Executer les tests
+      - name: Run test
+        run: cd app && php artisan test
